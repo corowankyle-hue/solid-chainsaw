@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boogsh</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #b94fff;
+      --accent2: #7c1fff;
+      --dark: #06030e;
+      --purple-deep: #2a0660;
+      --white: #f0eaff;
+    }
+
+    /* ── LANDING PAGE ── */
+    #page-landing {
+      font-family: 'Raleway', sans-serif;
+      background: var(--dark);
+      overflow: hidden;
+      background-image: url('images/beacg.png');
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 100vh;
+    }
+
+    #page-landing header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 200;
+      padding: 0 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    #page-landing header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(185,79,255,0.2), transparent);
+    }
+    .logo {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      letter-spacing: 0.08em;
+    }
+    .logo span { color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 8px; }
+    nav ul li, nav ul li a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+    }
+    nav ul li.active, nav ul li:hover, nav ul li a:hover {
+      color: var(--white);
+      background: rgba(185,79,255,0.1);
+      border-color: rgba(185,79,255,0.25);
+    }
+
+    .scene {
+      position: relative;
+      width: 100%; height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 25% 55%, rgba(26,5,64,0.55) 0%, rgba(6,3,14,0.45) 65%);
+    }
+
+    .nebula {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+    }
+    .nebula-1 {
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(120,30,200,0.22), transparent 70%);
+      top: 10%; left: -5%;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    .nebula-2 {
+      width: 500px; height: 300px;
+      background: radial-gradient(ellipse, rgba(60,0,120,0.18), transparent 70%);
+      top: 40%; left: 30%;
+      animation: drift 9s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.05); }
+    }
+
+    .orb {
+      position: absolute;
+      bottom: -25%; left: 50%;
+      transform: translateX(-50%);
+      width: 1000px; height: 1000px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(100,10,200,0.32) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      animation: orbPulse 7s ease-in-out infinite alternate;
+    }
+    @keyframes orbPulse {
+      from { opacity: 0.6; transform: translateX(-50%) scale(1); }
+      to   { opacity: 1;   transform: translateX(-50%) scale(1.08); }
+    }
+
+    .title {
+      font-family: 'Cinzel Decorative', serif;
+      position: absolute;
+      top: 50%; left: 6%;
+      transform: translateY(-50%);
+      color: var(--white);
+      font-size: clamp(36px, 6.5vw, 96px);
+      line-height: 1.05;
+      text-shadow: 3px 5px 0 var(--purple-deep), 0 0 80px rgba(185,79,255,0.4);
+      z-index: 10;
+      user-select: none;
+      font-weight: 900;
+    }
+    .title .accent-line {
+      display: block;
+      color: var(--accent);
+      text-shadow: 3px 5px 0 #3a0080, 0 0 50px rgba(185,79,255,0.65);
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 50%; left: 4%;
+      margin-top: 130px;
+      transform: translateY(-50%);
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 10rem;
+      color: rgba(185,79,255,0.04);
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .content {
+      position: absolute;
+      top: 45%; right: 15%;
+      transform: translateY(-50%);
+      width: clamp(280px, 27vw, 370px);
+      z-index: 20;
+      color: var(--white);
+    }
+    .content .item { display: none; }
+    .content .item.active { display: block; }
+
+    .content .item h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .content .item h1 span { color: var(--accent); }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(185,79,255,0.35);
+      padding: 3px 11px;
+      border-radius: 2px;
+      margin-bottom: 14px;
+      background: rgba(185,79,255,0.06);
+      font-weight: 500;
+    }
+
+    .divider {
+      width: 36px; height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      margin-bottom: 18px;
+    }
+
+    .content .des {
+      font-size: 0.83rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.85);
+      font-weight: 300;
+      font-style: italic;
+      background: rgba(6, 3, 14, 0.50);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(185,79,255,0.15);
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+
+    .center-circle-wrap {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 8;
+    }
+
+    .crab-label {
+      position: absolute;
+      top: 375px;
+      left: 280px;
+      transform: translateX(-100%);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      pointer-events: none;
+      z-index: 15;
+      white-space: nowrap;
+    }
+    .crab-label span {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      background: rgba(6, 3, 14, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(185,79,255,0.25);
+      border-radius: 3px;
+      padding: 4px 10px;
+    }
+    .crab-label::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(185,79,255,0.5), transparent);
+    }
+
+    .ring-deco {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      border: 1px dashed rgba(185,79,255,0.2);
+      pointer-events: none;
+      z-index: 7;
+      animation: spinRing 18s linear infinite;
+    }
+    .ring-deco::after {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      border: 1px solid rgba(185,79,255,0.07);
+    }
+    @keyframes spinRing {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .center-circle {
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(185,79,255,0.35);
+      box-shadow: 0 0 50px rgba(100,10,200,0.6), 0 0 20px rgba(185,79,255,0.2);
+      background: rgba(185,79,255,0.08);
+      backdrop-filter: blur(4px);
+      transition: box-shadow 0.4s, border-color 0.4s, transform 0.3s;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+    }
+    .center-circle:hover {
+      box-shadow: 0 0 80px rgba(100,10,200,0.8), 0 0 40px rgba(185,79,255,0.5);
+      border-color: rgba(185,79,255,0.7);
+      transform: scale(1.06);
+    }
+    .center-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-btn {
+      position: fixed;
+      bottom: 42px;
+      z-index: 300;
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      border: 1px solid rgba(185,79,255,0.2);
+      background: rgba(185,79,255,0.05);
+      color: rgba(255,255,255,0.55);
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+    }
+    .nav-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      transform: scale(1.1);
+      box-shadow: 0 0 35px rgba(185,79,255,0.5);
+    }
+    #prev { left: calc(50% - 62px); }
+    #next { left: calc(50% + 12px); }
+
+    .progress {
+      position: fixed;
+      bottom: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple-deep), var(--accent));
+      z-index: 300;
+      transition: width 0.7s cubic-bezier(0.77,0,0.175,1);
+    }
+
+    .counter {
+      position: fixed;
+      bottom: 52px; right: 55px;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.18);
+      z-index: 300;
+    }
+    .counter span { color: rgba(185,79,255,0.75); }
+
+    @keyframes showContent {
+      from { opacity: 0; transform: translateY(28px); filter: blur(5px); }
+      to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
+    }
+    .content .item.active .tag     { opacity:0; animation: showContent .45s .05s ease forwards; }
+    .content .item.active h1       { opacity:0; animation: showContent .5s .15s ease forwards; }
+    .content .item.active .divider { opacity:0; animation: showContent .5s .28s ease forwards; }
+    .content .item.active .des     { opacity:0; animation: showContent .5s .38s ease forwards; }
+
+    /* ── GAME PAGE ── */
+    #page-game {
+      display: none;
+      font-family: 'Courier New', monospace;
+      background: #3a6a8a;
+      color: white;
+      overflow: hidden;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+    #page-game.active {
+      display: flex;
+    }
+
+    #gameContainer { position: relative; }
+    #gameCanvas { display: block; border: 3px solid #8ab4c8; box-shadow: 0 0 30px rgba(100,180,220,0.5); }
+
+    #gameInfo {
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 20px; z-index: 10;
+    }
+    .info-item {
+      background: rgba(255,255,255,0.88); color: #1a3a1a;
+      padding: 6px 16px; border-radius: 8px; border: 2px solid #4a7a4a;
+      font-size: 18px; font-weight: bold;
+    }
+    #pauseBtn {
+      position: absolute; top: 12px; right: 12px;
+      padding: 7px 18px; font-size: 14px;
+      background: rgba(255,255,255,0.88); color: #1a3a1a;
+      border: 2px solid #4a7a4a; border-radius: 8px; cursor: pointer;
+      font-family: 'Courier New', monospace; font-weight: bold; z-index: 10;
+    }
+    #pauseBtn:hover { background: #c8e8c8; }
+    #currentWord {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-size: 26px; color: #1a3a1a; background: rgba(255,255,255,0.92);
+      padding: 10px 28px; border-radius: 10px; border: 2px solid #4a7a4a;
+      min-width: 180px; text-align: center; font-weight: bold; letter-spacing: 2px;
+    }
+    #bossWarning {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      font-size: 52px; color: #cc2200; display: none;
+      animation: pulse 0.5s infinite; z-index: 50;
+      background: rgba(255,255,255,0.9); padding: 16px 28px; border-radius: 14px;
+      text-align: center; white-space: nowrap;
+    }
+    @keyframes pulse {
+      0%,100% { transform: translate(-50%,-50%) scale(1); }
+      50%      { transform: translate(-50%,-50%) scale(1.12); }
+    }
+    .overlay-box {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      background: rgba(240,252,240,0.97); color: #1a3a1a;
+      padding: 32px 42px; border-radius: 20px; border: 3px solid #4a8a4a;
+      text-align: center; z-index: 100;
+    }
+    .overlay-box h1 { font-size: 38px; margin-bottom: 14px; }
+    .overlay-box p  { font-size: 16px; margin: 6px 0; color: #3a5a3a; }
+    .game-btn {
+      margin-top: 18px; padding: 12px 32px; font-size: 18px;
+      background: #4a8a4a; color: white; border: none; border-radius: 10px;
+      cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold;
+      transition: all 0.2s;
+    }
+    .game-btn:hover { background: #2a6a2a; transform: scale(1.05); }
+    #startScreen { max-width: 500px; }
+    #startScreen h1 { color: #1a5a1a; }
+
+    /* Back button — game page only */
+    .game-back {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      text-decoration: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .game-back span {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      background: rgba(6, 3, 14, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(185,79,255,0.25);
+      border-radius: 3px;
+      padding: 6px 14px;
+      display: inline-block;
+    }
+    .game-back:hover span {
+      background: rgba(185,79,255,0.3);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════ LANDING PAGE ══════════════ -->
+  <div id="page-landing">
+    <header>
+      <div class="logo">B<span>.</span></div>
+      <nav>
+        <ul>
+          <li class="active">Boogsh</li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="scene">
+      <div class="nebula nebula-1"></div>
+      <div class="nebula nebula-2"></div>
+      <div class="orb"></div>
+
+      <div class="title">
+        Project<br>
+        <span class="accent-line">Boogsh</span>
+      </div>
+      <div class="slide-number" id="slideNum">01</div>
+
+      <div class="content">
+        <div class="item active">
+          <div class="tag">Explore</div>
+          <h1>Falling <span>Crustaceans</span></h1>
+          <div class="divider"></div>
+          <div class="des">
+            In a world where crabs, lobsters, and shrimp inexplicably rain from the heavens, one unhinged garden gnome stands between civilization and a seafood catastrophe. Armed with nothing but a pointed hat and an obsessive knowledge of crustacean taxonomy, he destroys each falling beast the only way he knows how — by typing its name with furious, stubby fingers.
+          </div>
+        </div>
+      </div>
+
+      <div class="ring-deco"></div>
+
+      <div class="center-circle-wrap">
+        <div class="crab-label">
+          <span>Click the crab</span>
+        </div>
+        <a onclick="showGame()" class="center-circle" style="cursor:pointer;">
+          <img src="images/crab-crab-spin.gif" alt="Play Game">
+        </a>
+      </div>
+    </div>
+
+    <button class="nav-btn" id="prev">&#8592;</button>
+    <button class="nav-btn" id="next">&#8594;</button>
+    <div class="progress" id="progress"></div>
+    <div class="counter"><span id="currentNum">01</span> / 03</div>
+  </div>
+
+
+  <!-- ══════════════ GAME PAGE ══════════════ -->
+  <div id="page-game">
+    <div id="gameContainer">
+      <div id="startScreen" class="overlay-box">
+        <h1>Falling <span>Crustaceans</span></h1>
+        <p>Type the falling crustaceans to destroy them!</p>
+        <p style="color:#2a6a2a;font-weight:bold;">ESC to pause · Backspace to delete</p>
+        <button class="game-btn" id="startBtn">▶ START GAME</button>
+      </div>
+
+      <div id="gameInfo">
+        <div class="info-item">Score: <span id="score">0</span></div>
+        <div class="info-item">Lives: <span id="lives">3</span></div>
+        <div class="info-item">Level: <span id="level">1</span></div>
+      </div>
+      <button id="pauseBtn">⏸ PAUSE</button>
+      <canvas id="gameCanvas" width="900" height="700"></canvas>
+      <div id="currentWord"></div>
+      <div id="bossWarning">⚠️ LOBSTER INCOMING ⚠️</div>
+
+      <div id="pauseScreen" class="overlay-box" style="display:none;">
+        <h1 style="color:#4a8a4a">⏸ PAUSED</h1>
+        <p>Press ESC or click Resume</p>
+        <button class="game-btn" id="resumeBtn">▶ RESUME</button>
+      </div>
+
+      <div id="gameOver" class="overlay-box" style="display:none;border-color:#cc2200;">
+        <h1 style="color:#cc2200">Outtyped by crustaceans.</h1>
+        <p>Final Score: <span id="finalScore">0</span></p>
+        <p>Words Destroyed: <span id="wordsDestroyed">0</span></p>
+        <p>Bosses Defeated: <span id="bossesDefeated">0</span></p>
+        <button class="game-btn" id="restartBtn">↺ PLAY AGAIN</button>
+      </div>
+    </div>
+
+    <button class="game-back" onclick="showLanding()">
+      <span>← Back</span>
+    </button>
+  </div>
+
+
+  <script>
+    /* ── PAGE SWITCHING ── */
+    function showGame() {
+      document.getElementById('page-landing').style.display = 'none';
+      document.getElementById('page-game').style.display = 'flex';
+    }
+    function showLanding() {
+      document.getElementById('page-landing').style.display = 'block';
+      document.getElementById('page-game').style.display = 'none';
+    }
+
+    /* ── GAME CODE ── */
+    const canvas = document.getElementById('gameCanvas');
+    const ctx    = canvas.getContext('2d');
+
+    const scoreEl          = document.getElementById('score');
+    const livesEl          = document.getElementById('lives');
+    const levelEl          = document.getElementById('level');
+    const currentWordEl    = document.getElementById('currentWord');
+    const gameOverEl       = document.getElementById('gameOver');
+    const finalScoreEl     = document.getElementById('finalScore');
+    const wordsDestroyedEl = document.getElementById('wordsDestroyed');
+    const bossesDefeatedEl = document.getElementById('bossesDefeated');
+    const restartBtn       = document.getElementById('restartBtn');
+    const startScreen      = document.getElementById('startScreen');
+    const startBtn         = document.getElementById('startBtn');
+    const bossWarningEl    = document.getElementById('bossWarning');
+    const pauseBtn         = document.getElementById('pauseBtn');
+    const pauseScreen      = document.getElementById('pauseScreen');
+    const resumeBtn        = document.getElementById('resumeBtn');
+
+    const bgImage = new Image(); bgImage.src = 'images/BACKGROUND.png';
+    const gnomeImage = new Image(); gnomeImage.src = 'images/gnome.png';
+    const enemyImgs = {};
+    const enemyData = {
+      normal:     { src: 'images/crab.png',     w:65,  h:64,  dw:100, dh:64  },
+      speed:      { src: 'images/shrimp.png',   w:65,  h:64,  dw:82,  dh:64  },
+      shield:     { src: 'images/hermit.png',   w:65,  h:64,  dw:120, dh:84  },
+      multiplier: { src: 'images/starfish.png', w:65,  h:64,  dw:102, dh:64  },
+      boss:       { src: 'images/lobster.png',  w:174, h:128, dw:184, dh:128 }
+    };
+    for (const [k,v] of Object.entries(enemyData)) {
+      enemyImgs[k] = new Image();
+      enemyImgs[k].src = v.src;
+    }
+
+    const GNOME_W = 520, GNOME_H = 300;
+    const GNOME_X = -100,  GNOME_Y = canvas.height - GNOME_H - 20;
+    const STAFF_OFF_X = GNOME_W * 0.55;
+    const STAFF_OFF_Y = GNOME_H * 0.35;
+
+    const normalWords = [
+      'cat','dog','run','jump','code','type','game','fast','slow','word',
+      'hello','world','time','space','star','moon','fire','water','earth','wind',
+      'light','dark','power','magic','quest','fight','skill','level','score','play',
+      'read','write','learn','teach','study','work','rest','sleep','wake','dream',
+      'hope','fear','love','hate','peace','war','life','death','birth','grow',
+      'walk','swim','fly','dive','climb','fall','rise','sink','float','drift',
+      'push','pull','lift','drop','hold','grab','throw','catch','kick','hit'
+    ];
+    const longWords = [
+      'computer','keyboard','javascript','programming','development',
+      'algorithm','function','variable','experience','challenge',
+      'mountain','river','forest','desert','ocean','island','volcano',
+      'thunder','lightning','rainbow','sunset','sunrise','midnight',
+      'adventure','journey','mystery','treasure','kingdom','empire',
+      'warrior','wizard','dragon','phoenix','unicorn','griffin'
+    ];
+    const bossWords = [
+      'extraordinary','magnificent','revolutionary','overwhelming','unbelievable',
+      'breathtaking','supernatural','phenomenal','spectacular','tremendous',
+      'unforgettable','incomparable','indestructible','demonstration','sophisticated',
+      'astronomical','catastrophic','dimensional','enthusiastic','exaggeration',
+      'fundamental','imagination','implementation','independence','information',
+      'inspiration','intelligence','interpretation','introduction','investigation'
+    ];
+
+    const ENEMY_TYPES = { NORMAL:'normal', MULTIPLIER:'multiplier', SPEED:'speed', SHIELD:'shield', BOSS:'boss' };
+
+    let bullets = [];
+
+    class Bullet {
+      constructor(sx, sy, target) {
+        this.x = sx; this.y = sy;
+        this.target = target;
+        this.trail = [];
+        this.dead = false;
+        this.hit  = false;
+      }
+      update() {
+        if (this.dead) return;
+        const tx = this.target.x, ty = this.target.y;
+        const dx = tx - this.x,  dy = ty - this.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        const speed = 16;
+        this.trail.push({x:this.x, y:this.y});
+        if (this.trail.length > 8) this.trail.shift();
+        if (dist < speed + 4) {
+          this.x = tx; this.y = ty;
+          this.hit = true; this.dead = true;
+        } else {
+          this.x += (dx/dist)*speed;
+          this.y += (dy/dist)*speed;
+        }
+      }
+      draw() {
+        for (let i = 0; i < this.trail.length; i++) {
+          const frac = i / this.trail.length;
+          ctx.globalAlpha = frac * 0.5;
+          ctx.fillStyle = '#ff88cc';
+          ctx.beginPath();
+          ctx.arc(this.trail[i].x, this.trail[i].y, 4*frac, 0, Math.PI*2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        ctx.shadowColor = '#ff44aa'; ctx.shadowBlur = 16;
+        ctx.fillStyle = '#ffaaee';
+        ctx.beginPath(); ctx.arc(this.x, this.y, 6, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath(); ctx.arc(this.x, this.y, 2.5, 0, Math.PI*2); ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    class FallingWord {
+      constructor(type = ENEMY_TYPES.NORMAL, customWord = null) {
+        this.type = type;
+        this.setupByType(customWord);
+        this.x    = Math.random() * (canvas.width - 220) + 110;
+        this.y    = -60;
+        this.matchedChars = 0;
+        this.baseSpeed = 0.3 + (gameState.level * 0.1);
+        this.speed = this.baseSpeed * this.speedMultiplier;
+        this.pendingBullet = null;
+      }
+      setupByType(cw) {
+        switch(this.type) {
+          case ENEMY_TYPES.MULTIPLIER:
+            this.text=cw||longWords[Math.floor(Math.random()*longWords.length)];
+            this.color='#aa00aa'; this.fontSize=22; this.speedMultiplier=0.6;
+            this.hp=1; this.maxHp=1; break;
+          case ENEMY_TYPES.SPEED:
+            this.text=cw||normalWords[Math.floor(Math.random()*normalWords.length)];
+            this.color='#997700'; this.fontSize=20; this.speedMultiplier=2;
+            this.hp=1; this.maxHp=1; break;
+          case ENEMY_TYPES.SHIELD:
+            this.text=cw||longWords[Math.floor(Math.random()*longWords.length)];
+            this.color='#cc4400'; this.fontSize=22; this.speedMultiplier=0.8;
+            this.hp=2; this.maxHp=2; break;
+          case ENEMY_TYPES.BOSS:
+            this.text=cw||this.getUnusedBossWord();
+            this.color='#aa0000'; this.fontSize=28; this.speedMultiplier=0.4;
+            this.hp=5; this.maxHp=5;
+            this.usedWords=[this.text]; break;
+          default:
+            this.text=cw||normalWords[Math.floor(Math.random()*normalWords.length)];
+            this.color='#1a5a1a'; this.fontSize=20; this.speedMultiplier=1;
+            this.hp=1; this.maxHp=1;
+        }
+      }
+      getUnusedBossWord() {
+        const av = bossWords.filter(w=>!gameState.usedBossWords.includes(w));
+        if (!av.length) { gameState.usedBossWords=[]; return bossWords[Math.floor(Math.random()*bossWords.length)]; }
+        const w = av[Math.floor(Math.random()*av.length)];
+        gameState.usedBossWords.push(w); return w;
+      }
+      morphBoss() {
+        const av = bossWords.filter(w=>!this.usedWords.includes(w));
+        this.text = av.length ? av[Math.floor(Math.random()*av.length)] : bossWords[Math.floor(Math.random()*bossWords.length)];
+        if (!av.length) this.usedWords=[];
+        this.usedWords.push(this.text);
+        this.matchedChars = 0;
+        createExplosion(this.x, this.y, '#ffcc00', 30);
+      }
+      update() { if (!gameState.gamePaused) this.y += this.speed; }
+      draw() {
+        const img = enemyImgs[this.type];
+        const ed  = enemyData[this.type];
+        const bubR = Math.max(ed.w, ed.h) * 0.62;
+        const bubCX = this.x, bubCY = this.y - ed.h * 0.5;
+        ctx.save();
+        ctx.globalAlpha = 0.55;
+        const bubGrad = ctx.createRadialGradient(bubCX - bubR*0.25, bubCY - bubR*0.25, bubR*0.05, bubCX, bubCY, bubR);
+        bubGrad.addColorStop(0, 'rgba(255,255,255,0.85)');
+        bubGrad.addColorStop(0.5, 'rgba(180,230,255,0.4)');
+        bubGrad.addColorStop(1, 'rgba(100,180,255,0.25)');
+        ctx.fillStyle = bubGrad;
+        ctx.beginPath(); ctx.arc(bubCX, bubCY, bubR, 0, Math.PI*2); ctx.fill();
+        ctx.globalAlpha = 0.7;
+        ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 2.5; ctx.stroke();
+        ctx.globalAlpha = 0.6;
+        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+        ctx.beginPath();
+        ctx.ellipse(bubCX - bubR*0.3, bubCY - bubR*0.35, bubR*0.18, bubR*0.1, -0.5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+        if (img.complete && img.naturalWidth > 0) {
+          ctx.drawImage(img, this.x - ed.dw/2, this.y - ed.dh, ed.dw, ed.dh);
+        }
+        const spacing = this.type===ENEMY_TYPES.BOSS ? 18 : 15;
+        const pillY = this.y + 6;
+        if (this.maxHp > 1) {
+          const bw=60, bh=5, hp=this.hp/this.maxHp;
+          ctx.fillStyle='rgba(200,0,0,0.18)';
+          ctx.fillRect(this.x-bw/2, pillY - this.fontSize - 4, bw, bh);
+          ctx.fillStyle = this.hp===this.maxHp ? '#228822' : this.hp===2 ? '#cc8800' : '#cc2200';
+          ctx.fillRect(this.x-bw/2, pillY - this.fontSize - 4, bw*hp, bh);
+        }
+        ctx.font = `bold ${this.fontSize}px "Courier New"`;
+        ctx.textAlign = 'center';
+        for (let i=0; i<this.text.length; i++) {
+          const charX = this.x + (i - this.text.length/2)*spacing;
+          ctx.strokeStyle = 'rgba(255,255,255,0.95)'; ctx.lineWidth = 4; ctx.lineJoin = 'round';
+          ctx.strokeText(this.text[i], charX, pillY + 6);
+          ctx.fillStyle = i < this.matchedChars ? '#006600' : this.color;
+          ctx.shadowColor = this.color; ctx.shadowBlur = 4;
+          ctx.fillText(this.text[i], charX, pillY + 6);
+        }
+        ctx.shadowBlur = 0;
+      }
+      takeDamage() {
+        this.hp--;
+        if (this.type===ENEMY_TYPES.BOSS && this.hp>0) { this.morphBoss(); return null; }
+        if (this.hp <= 0) return this.onDestroy();
+        return null;
+      }
+      onDestroy() {
+        if (this.type===ENEMY_TYPES.MULTIPLIER) {
+          const w1=this.text.substring(0,Math.floor(this.text.length/2));
+          const w2=this.text.substring(Math.floor(this.text.length/2));
+          if (w1.length>=3 && w2.length>=3) {
+            const c1=new FallingWord(ENEMY_TYPES.NORMAL,w1);
+            const c2=new FallingWord(ENEMY_TYPES.NORMAL,w2);
+            c1.x=this.x-55; c2.x=this.x+55; c1.y=this.y; c2.y=this.y;
+            return [c1,c2];
+          }
+        } else if (this.type===ENEMY_TYPES.BOSS) {
+          gameState.bossesDefeated++; gameState.bossActive=false;
+        }
+        return null;
+      }
+      isOffScreen() { return this.y > canvas.height + 80; }
+    }
+
+    class Particle {
+      constructor(x,y,color) {
+        this.x=x; this.y=y;
+        this.vx=(Math.random()-0.5)*8; this.vy=(Math.random()-0.5)*8;
+        this.color=color; this.life=1; this.size=Math.random()*4+2;
+      }
+      update() {
+        if (!gameState.gamePaused) {
+          this.x+=this.vx; this.y+=this.vy;
+          this.life-=0.025; this.size*=0.94;
+        }
+      }
+      draw() {
+        ctx.globalAlpha=this.life; ctx.fillStyle=this.color;
+        ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill();
+        ctx.globalAlpha=1;
+      }
+      isDead() { return this.life<=0; }
+    }
+
+    function createExplosion(x,y,color,count=20) {
+      for (let i=0;i<count;i++) gameState.particles.push(new Particle(x,y,color));
+    }
+
+    let gameState = {
+      score:0, lives:3, level:1, wordsDestroyed:0, bossesDefeated:0,
+      currentInput:'', fallingWords:[], gameRunning:false, gamePaused:false,
+      spawnTimer:0, spawnInterval:2666, particles:[],
+      bossActive:false, bossTimer:0, usedBossWords:[], bossSpawnedForLevel:false
+    };
+
+    function fireBullet(targetWord) {
+      const sx = GNOME_X + STAFF_OFF_X;
+      const sy = GNOME_Y + STAFF_OFF_Y;
+      const b  = new Bullet(sx, sy, targetWord);
+      targetWord.pendingBullet = b;
+      bullets.push(b);
+    }
+
+    function spawnWord() {
+      if (gameState.bossActive) return;
+      if (gameState.level%5===0 && !gameState.bossSpawnedForLevel) { gameState.bossSpawnedForLevel=true; spawnBoss(); return; }
+      let type = ENEMY_TYPES.NORMAL;
+      const r = Math.random();
+      if (gameState.level>=2) {
+        if      (r < 0.15)                       type=ENEMY_TYPES.MULTIPLIER;
+        else if (r < 0.35)                       type=ENEMY_TYPES.SPEED;
+        else if (r < 0.50 && gameState.level>=3) type=ENEMY_TYPES.SHIELD;
+      }
+      gameState.fallingWords.push(new FallingWord(type));
+    }
+
+    function spawnBoss() {
+      gameState.bossActive=true; gameState.bossTimer=180;
+      bossWarningEl.style.display='block';
+      setTimeout(()=>{
+        bossWarningEl.style.display='none';
+        gameState.fallingWords.push(new FallingWord(ENEMY_TYPES.BOSS));
+      }, 2000);
+    }
+
+    function togglePause() {
+      gameState.gamePaused=!gameState.gamePaused;
+      pauseScreen.style.display = gameState.gamePaused ? 'block' : 'none';
+      pauseBtn.textContent = gameState.gamePaused ? '▶ RESUME' : '⏸ PAUSE';
+    }
+
+    function update() {
+      if (!gameState.gameRunning || gameState.gamePaused) return;
+      if (gameState.bossTimer>0) gameState.bossTimer--;
+      if (!gameState.bossActive) {
+        gameState.spawnTimer+=16;
+        if (gameState.spawnTimer>=gameState.spawnInterval) { spawnWord(); gameState.spawnTimer=0; }
+      }
+      for (let i=gameState.fallingWords.length-1; i>=0; i--) {
+        const w=gameState.fallingWords[i]; w.update();
+        if (w.isOffScreen()) {
+          gameState.fallingWords.splice(i,1);
+          gameState.lives--;
+          livesEl.textContent=gameState.lives;
+          if (w.type===ENEMY_TYPES.BOSS) gameState.bossActive=false;
+          if (gameState.lives<=0) endGame();
+        }
+      }
+      for (let i=bullets.length-1; i>=0; i--) {
+        const b = bullets[i]; b.update();
+        if (b.hit) {
+          const word = b.target;
+          const idx  = gameState.fallingWords.indexOf(word);
+          if (idx !== -1) {
+            createExplosion(word.x, word.y, word.color, word.type===ENEMY_TYPES.BOSS?50:25);
+            const children = word.takeDamage();
+            if (word.hp <= 0) {
+              gameState.fallingWords.splice(idx,1);
+              let pts = word.text.length * 10;
+              if (word.type===ENEMY_TYPES.BOSS)        pts*=5;
+              else if (word.type===ENEMY_TYPES.SHIELD) pts*=2;
+              gameState.score += pts;
+              gameState.wordsDestroyed++;
+              scoreEl.textContent = gameState.score;
+              if (children) children.forEach(c=>gameState.fallingWords.push(c));
+            }
+          }
+          bullets.splice(i,1);
+        } else if (b.dead) {
+          bullets.splice(i,1);
+        }
+      }
+      for (let i=gameState.particles.length-1; i>=0; i--) {
+        gameState.particles[i].update();
+        if (gameState.particles[i].isDead()) gameState.particles.splice(i,1);
+      }
+      const newLevel=Math.floor(gameState.wordsDestroyed/5)+1;
+      if (newLevel>gameState.level) {
+        gameState.level=newLevel;
+        levelEl.textContent=gameState.level;
+        gameState.spawnInterval=Math.max(1066,2666-(gameState.level*106));
+        gameState.bossSpawnedForLevel=false;
+      }
+    }
+
+    function draw() {
+      if (bgImage.complete && bgImage.naturalWidth > 0) {
+        ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+      } else {
+        ctx.fillStyle='#a8d8ea'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      }
+      const vig = ctx.createRadialGradient(canvas.width/2,canvas.height/2,canvas.height*0.25,
+                                            canvas.width/2,canvas.height/2,canvas.height*0.9);
+      vig.addColorStop(0,'rgba(0,0,0,0)'); vig.addColorStop(1,'rgba(0,0,0,0.22)');
+      ctx.fillStyle=vig; ctx.fillRect(0,0,canvas.width,canvas.height);
+      gameState.particles.forEach(p=>p.draw());
+      bullets.forEach(b=>b.draw());
+      gameState.fallingWords.forEach(w=>w.draw());
+      if (gnomeImage.complete && gnomeImage.naturalWidth > 0) {
+        ctx.drawImage(gnomeImage, GNOME_X, GNOME_Y, GNOME_W, GNOME_H);
+      }
+      if (gameState.gamePaused) {
+        ctx.fillStyle='rgba(200,230,200,0.35)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      }
+    }
+
+    function gameLoop() { update(); draw(); requestAnimationFrame(gameLoop); }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key==='Escape' && gameState.gameRunning) { togglePause(); return; }
+      if (!gameState.gameRunning || gameState.gamePaused) {
+        if (startScreen.style.display!=='none' && e.key.length===1 && e.key.match(/[a-z]/i)) startGame();
+        return;
+      }
+      if (e.key==='Backspace') {
+        gameState.currentInput=gameState.currentInput.slice(0,-1);
+        currentWordEl.textContent=gameState.currentInput;
+        gameState.fallingWords.forEach(w=>{
+          w.matchedChars = w.text.startsWith(gameState.currentInput) ? gameState.currentInput.length : 0;
+        });
+        return;
+      }
+      if (e.key.length===1 && e.key.match(/[a-z]/i)) {
+        gameState.currentInput+=e.key.toLowerCase();
+        currentWordEl.textContent=gameState.currentInput;
+        for (let i=gameState.fallingWords.length-1; i>=0; i--) {
+          const word=gameState.fallingWords[i];
+          if (word.text===gameState.currentInput) {
+            if (!word.pendingBullet || word.pendingBullet.dead) fireBullet(word);
+            gameState.currentInput='';
+            currentWordEl.textContent='';
+            gameState.fallingWords.forEach(w=>{ w.matchedChars=0; });
+            break;
+          } else if (word.text.startsWith(gameState.currentInput)) {
+            word.matchedChars=gameState.currentInput.length;
+          } else {
+            word.matchedChars=0;
+          }
+        }
+      }
+    });
+
+    function startGame() {
+      startScreen.style.display='none';
+      gameState={
+        score:0, lives:3, level:1, wordsDestroyed:0, bossesDefeated:0,
+        currentInput:'', fallingWords:[], gameRunning:true, gamePaused:false,
+        spawnTimer:0, spawnInterval:2666, particles:[],
+        bossActive:false, bossTimer:0, usedBossWords:[], bossSpawnedForLevel:false
+      };
+      bullets=[];
+      scoreEl.textContent='0'; livesEl.textContent='3'; levelEl.textContent='1';
+      currentWordEl.textContent='';
+      gameOverEl.style.display='none';
+      pauseScreen.style.display='none';
+      pauseBtn.textContent='⏸ PAUSE';
+      spawnWord();
+    }
+
+    function endGame() {
+      gameState.gameRunning=false;
+      finalScoreEl.textContent=gameState.score;
+      wordsDestroyedEl.textContent=gameState.wordsDestroyed;
+      bossesDefeatedEl.textContent=gameState.bossesDefeated;
+      gameOverEl.style.display='block';
+    }
+
+    startBtn.addEventListener('click',  startGame);
+    restartBtn.addEventListener('click', startGame);
+    pauseBtn.addEventListener('click',   togglePause);
+    resumeBtn.addEventListener('click',  togglePause);
+
+    gameLoop();
+  </script>
+</body>
+</html>
